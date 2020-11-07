@@ -3,10 +3,13 @@ package controller;
 import java.util.HashMap;
 
 import cliente.Cliente;
-import validator.ValidatorCliente;
+import validator.Validator;
 
 public class ControllerCliente {
 	private HashMap<String, Cliente> clientes;
+	public ControllerCliente() {
+		
+	}
 
 	public ControllerCliente(HashMap<String, Cliente> clientes) {
 		this.clientes = new HashMap<>();
@@ -16,25 +19,24 @@ public class ControllerCliente {
 		return clientes.get(cpf);
 	}
 
-	public String cadastraCliente(String cpf, String nome, String email, String localizacao) {
+	public String adicionaCliente(String cpf, String nome, String email, String localizacao) {
 		if (existeCliente(cpf) == false) {
 			Cliente cliente = new Cliente(cpf, nome, email, localizacao);
-			ValidatorCliente.verificaStringNull(cpf, "Erro no cadastro do cliente: cpf nao pode ser vazio ou nulo.");
-			ValidatorCliente.verificaStringVazia(cpf, "Erro no cadastro do cliente: cpf nao pode ser vazio ou nulo.");
-			ValidatorCliente.verificaStringNull(nome, "Erro no cadastro do cliente: nome nao pode ser vazio ou nulo.");
-			ValidatorCliente.verificaStringVazia(nome, "Erro no cadastro do cliente: nome nao pode ser vazio ou nulo.");
-			ValidatorCliente.verificaStringNull(email,
-					"Erro no cadastro do cliente: email nao pode ser vazio ou nulo.");
-			ValidatorCliente.verificaStringVazia(email,
-					"Erro no cadastro do cliente: email nao pode ser vazio ou nulo.");
-			ValidatorCliente.verificaStringNull(localizacao,
+			Validator.verificaStringNull(cpf, "Erro no cadastro do cliente: cpf nao pode ser vazio ou nulo.");
+			Validator.verificaStringVazia(cpf, "Erro no cadastro do cliente: cpf nao pode ser vazio ou nulo.");
+			Validator.verificaCpfInvalido(cpf, "Erro no cadastro do cliente: cpf invalido.");
+			Validator.verificaStringNull(nome, "Erro no cadastro do cliente: nome nao pode ser vazio ou nulo.");
+			Validator.verificaStringVazia(nome, "Erro no cadastro do cliente: nome nao pode ser vazio ou nulo.");
+			Validator.verificaStringNull(email, "Erro no cadastro do cliente: email nao pode ser vazio ou nulo.");
+			Validator.verificaStringVazia(email, "Erro no cadastro do cliente: email nao pode ser vazio ou nulo.");
+			Validator.verificaStringNull(localizacao,
 					"Erro no cadastro do cliente: localizacao nao pode ser vazio ou nulo.");
-			ValidatorCliente.verificaStringVazia(localizacao,
+			Validator.verificaStringVazia(localizacao,
 					"Erro no cadastro do cliente: localizacao nao pode ser vazio ou nulo.");
 			this.clientes.put(cpf, cliente);
 			return cliente.toStringCpf();
 		} else {
-			return "Erro no cadastro do cliente: cliente ja existe.";
+			throw new IllegalArgumentException("Erro no cadastro do cliente: cliente ja existe.");
 		}
 	}
 
@@ -47,24 +49,30 @@ public class ControllerCliente {
 	}
 
 	public String exibeCliente(String cpf) {
-		ValidatorCliente.verificaStringNull(cpf, "Erro no cadastro do cliente: cpf nao pode ser vazio ou nulo.");
-		ValidatorCliente.verificaStringVazia(cpf, "Erro no cadastro do cliente: cpf nao pode ser vazio ou nulo.");
+		Validator.verificaStringNull(cpf, "Erro no cadastro do cliente: cpf nao pode ser vazio ou nulo.");
+		Validator.verificaStringVazia(cpf, "Erro no cadastro do cliente: cpf nao pode ser vazio ou nulo.");
 		if (existeCliente(cpf) == false) {
-			return "Erro na exibicao do cliente: cliente nao existe.";
+			throw new IllegalArgumentException("Erro na exibicao do cliente: cliente nao existe.");
 		}
 		return getClientes().get(cpf).toStringExibeCliente();
 
 	}
+	public String exibeTodosClientes() {
+		String texto = "";
+		for (String chave : clientes.keySet()){
+			texto += clientes.get(chave).toStringExibeCliente();
+			texto += " | ";
+			}
+		return texto;
+	}
 
 	public String editaCliente(String cpf, String atributo, String novoValor) {
-		ValidatorCliente.verificaStringNull(cpf, "Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.");
-		ValidatorCliente.verificaStringVazia(cpf, "Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.");
-		ValidatorCliente.verificaStringNull(atributo,
-				"Erro na edicao do cliente: atributo nao pode ser vazio ou nulo.");
-		ValidatorCliente.verificaStringVazia(atributo,
-				"Erro na edicao do cliente: atributo nao pode ser vazio ou nulo.");
+		Validator.verificaStringNull(cpf, "Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.");
+		Validator.verificaStringVazia(cpf, "Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.");
+		Validator.verificaStringNull(atributo, "Erro na edicao do cliente: atributo nao pode ser vazio ou nulo.");
+		Validator.verificaStringVazia(atributo, "Erro na edicao do cliente: atributo nao pode ser vazio ou nulo.");
 		if (existeCliente(cpf) == false) {
-			return "Erro na exibicao do cliente: cliente nao existe.";
+			throw new IllegalArgumentException("Erro na exibicao do cliente: cliente nao existe.");
 		}
 
 		switch (atributo) {
@@ -82,17 +90,17 @@ public class ControllerCliente {
 			getCliente(cpf).setLocalizacao(novoValor);
 			break;
 		default:
-			return "Erro na edicao do cliente: atributo nao existe.";
+			throw new IllegalArgumentException("Erro na edicao do cliente: atributo nao existe.");
 		}
 
 		return novoValor;
 	}
 
 	public String removeCliente(String cpf) {
-		ValidatorCliente.verificaStringNull(cpf, "Erro na remocao do cliente: cpf nao pode ser vazio ou nulo");
-		ValidatorCliente.verificaStringVazia(cpf, "Erro na remocao do cliente: cpf nao pode ser vazio ou nulo");
+		Validator.verificaStringNull(cpf, "Erro na remocao do cliente: cpf nao pode ser vazio ou nulo");
+		Validator.verificaStringVazia(cpf, "Erro na remocao do cliente: cpf nao pode ser vazio ou nulo");
 		if (existeCliente(cpf) == false) {
-			return "Erro na exibicao do cliente: cliente nao existe.";
+			throw new IllegalArgumentException("Erro na exibicao do cliente: cliente nao existe.");
 		}
 		clientes.remove(cpf);
 		return cpf;

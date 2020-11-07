@@ -3,7 +3,7 @@ package controller;
 import java.util.HashMap;
 
 import fornecedor.Fornecedor;
-import validator.ValidatorCliente;
+import validator.Validator;
 
 public class ControllerFornecedor {
 	private HashMap<String, Fornecedor> fornecedores;
@@ -19,22 +19,18 @@ public class ControllerFornecedor {
 	public String cadastraFornecedor(String nome, String email, String telefone) {
 		if (existeFornecedor(nome) == false) {
 			Fornecedor fornecedor = new Fornecedor(nome, email, telefone);
-			ValidatorCliente.verificaStringNull(nome,
-					"Erro no cadastro do fornecedor: nome nao pode ser vazio ou nulo.");
-			ValidatorCliente.verificaStringVazia(nome,
-					"Erro no cadastro do fornecedor: nome nao pode ser vazio ou nulo.");
-			ValidatorCliente.verificaStringNull(email,
-					"Erro no cadastro do fornecedor: email nao pode ser vazio ou nulo.");
-			ValidatorCliente.verificaStringVazia(email,
-					"Erro no cadastro do fornecedor: email nao pode ser vazio ou nulo.");
-			ValidatorCliente.verificaStringNull(telefone,
+			Validator.verificaStringNull(nome, "Erro no cadastro do fornecedor: nome nao pode ser vazio ou nulo.");
+			Validator.verificaStringVazia(nome, "Erro no cadastro do fornecedor: nome nao pode ser vazio ou nulo.");
+			Validator.verificaStringNull(email, "Erro no cadastro do fornecedor: email nao pode ser vazio ou nulo.");
+			Validator.verificaStringVazia(email, "Erro no cadastro do fornecedor: email nao pode ser vazio ou nulo.");
+			Validator.verificaStringNull(telefone,
 					"Erro no cadastro do fornecedor: telefone nao pode ser vazio ou nulo.");
-			ValidatorCliente.verificaStringVazia(telefone,
+			Validator.verificaStringVazia(telefone,
 					"Erro no cadastro do fornecedor: telefone nao pode ser vazio ou nulo.");
 			this.fornecedores.put(nome, fornecedor);
 			return fornecedor.toStringNome();
 		} else {
-			return "Erro no cadastro de fornecedor: fornecedor ja existe.";
+			throw new IllegalArgumentException("Erro no cadastro de fornecedor: fornecedor ja existe.");
 		}
 	}
 
@@ -47,24 +43,22 @@ public class ControllerFornecedor {
 	}
 
 	public String exibeFornecedor(String nome) {
-		ValidatorCliente.verificaStringNull(nome, "Erro na exibicao do fornecedor: fornecedor nao existe.");
-		ValidatorCliente.verificaStringVazia(nome, "Erro na exibicao do fornecedor: fornecedor nao existe.");
+		Validator.verificaStringNull(nome, "Erro na exibicao do fornecedor: fornecedor nao existe.");
+		Validator.verificaStringVazia(nome, "Erro na exibicao do fornecedor: fornecedor nao existe.");
 		if (existeFornecedor(nome) == false) {
-			return "Erro na exibicao do fornecedor: fornecedor nao existe.";
+			throw new IllegalArgumentException("Erro na exibicao do fornecedor: fornecedor nao existe.");
 		}
 		return getFornecedores().get(nome).toStringExibeFornecedor();
 
 	}
 
 	public String editaFornecedor(String nome, String atributo, String novoValor) {
-		ValidatorCliente.verificaStringNull(nome, "Erro na edicao do fornecedor: nome nao pode ser vazio ou nulo.");
-		ValidatorCliente.verificaStringVazia(nome, "Erro na edicao do fornecedor: nome nao pode ser vazio ou nulo.");
-		ValidatorCliente.verificaStringNull(atributo,
-				"Erro na edicao do fornecedor: atributo nao pode ser vazio ou nulo.");
-		ValidatorCliente.verificaStringVazia(atributo,
-				"Erro na edicao do fornecedor: atributo nao pode ser vazio ou nulo.");
+		Validator.verificaStringNull(nome, "Erro na edicao do fornecedor: nome nao pode ser vazio ou nulo.");
+		Validator.verificaStringVazia(nome, "Erro na edicao do fornecedor: nome nao pode ser vazio ou nulo.");
+		Validator.verificaStringNull(atributo, "Erro na edicao do fornecedor: atributo nao pode ser vazio ou nulo.");
+		Validator.verificaStringVazia(atributo, "Erro na edicao do fornecedor: atributo nao pode ser vazio ou nulo.");
 		if (existeFornecedor(nome) == false) {
-			return "Erro na edicao do fornecedor: fornecedor nao existe.";
+			throw new IllegalArgumentException("Erro na edicao do fornecedor: fornecedor nao existe.");
 		}
 
 		switch (atributo) {
@@ -78,19 +72,19 @@ public class ControllerFornecedor {
 			getFornecedor(nome).setTelefone(novoValor);
 			break;
 		default:
-			return "Erro na edicao do fornecedor: atributo nao existe.";
+			throw new IllegalArgumentException("Erro na edicao do fornecedor: atributo nao existe.");
 		}
 
 		return novoValor;
 	}
 
 	public String removeCliente(String nome) {
-		ValidatorCliente.verificaStringNull(nome,
+		Validator.verificaStringNull(nome,
 				"Erro na remocao do fornecedor: nome do fornecedor nao pode ser vazio ou nulo.");
-		ValidatorCliente.verificaStringVazia(nome,
+		Validator.verificaStringVazia(nome,
 				"Erro na remocao do fornecedor: nome do fornecedor nao pode ser vazio ou nulo.");
 		if (existeFornecedor(nome) == false) {
-			return "Erro na remocao do fornecedor: fornecedor nao existe.";
+			throw new IllegalArgumentException("Erro na remocao do fornecedor: fornecedor nao existe.");
 		}
 		fornecedores.remove(nome);
 		return nome;
