@@ -8,16 +8,22 @@ public class Validator {
 	}
 
 	public static void verificaStringNull(String valor, String mensagem) {
-		if(valor == null) {
+		if (valor == null) {
 			throw new NullPointerException(mensagem);
 		}
 	}
 
-	public static void verificaCpfInvalido(String valor,String mensagem) {
-		if (valor.length()!=11) {
+	public static void verificaCpfInvalido(String valor, String mensagem) {
+		if (valor.length() != 11) {
 			throw new IllegalArgumentException(mensagem);
 		}
-		
+
+	}
+
+	public static void verificaDoubleValido(double valor, String mensagem) {
+		if (valor < 0) {
+			throw new NullPointerException(mensagem);
+		}
 	}
 
 }
