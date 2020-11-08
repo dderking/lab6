@@ -1,9 +1,11 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import fornecedor.Fornecedor;
-
 import validator.Validator;
 
 public class ControllerProdutosDosFornecedores {
@@ -14,7 +16,7 @@ public class ControllerProdutosDosFornecedores {
 
 	}
 
-	private boolean existeFornecedor(String fornecedor) {
+	public boolean existeFornecedor(String fornecedor) {
 		return this.fornecedores.containsKey(fornecedor);
 	}
 
@@ -40,7 +42,7 @@ public class ControllerProdutosDosFornecedores {
 		}
 	}
 
-	private boolean existeProduto(String fornecedor, String nome, String descricao) {
+	public boolean existeProduto(String fornecedor, String nome, String descricao) {
 		if (existeFornecedor(fornecedor)) {
 			return this.fornecedores.get(fornecedor).existeProduto(nome, descricao);
 		}
@@ -66,6 +68,28 @@ public class ControllerProdutosDosFornecedores {
 		}
 
 	}
+	public String exibeProdutosFornecedor(String fornecedor) {
+		Validator.verificaStringNull(fornecedor, "Erro na exibicao de produto: fornecedor nao pode ser vazio ou nulo.");
+		Validator.verificaStringVazia(fornecedor,
+				"Erro na exibicao de produto: fornecedor nao pode ser vazio ou nulo.");
+		if (existeFornecedor(fornecedor)) {
+			return this.fornecedores.get(fornecedor).exibeProdutos();
+		}
+		throw new IllegalArgumentException("Erro na exibicao de produto: fornecedor nao existe.");
+	}
+
+	public String exibeTodosProdutos() {
+		List<Fornecedor> todosFornecedores = new ArrayList<Fornecedor>();
+		todosFornecedores.addAll(this.fornecedores.values());
+		Collections.sort(todosFornecedores);
+		String[] produtosToString = new String[this.fornecedores.size()];
+		for (int i = 0; i < this.fornecedores.size(); i++) {
+			produtosToString[i] = todosFornecedores.get(i).exibeProdutos();
+		}
+		return String.join(" | ", produtosToString);
+
+	}
+
 	public void editaProduto(String nome, String descricao, String fornecedor, double novoPreco) {
 		Validator.verificaStringNull(nome, "Erro na edicao de produto: nome nao pode ser vazio ou nulo.");
 		Validator.verificaStringVazia(nome, "Erro na edicao de produto: nome nao pode ser vazio ou nulo.");
@@ -84,6 +108,7 @@ public class ControllerProdutosDosFornecedores {
 			throw new IllegalArgumentException("Erro na edicao de produto: fornecedor nao existe.");
 		}
 	}
+
 	public void removeProduto(String nome, String descricao, String fornecedor) {
 		Validator.verificaStringNull(nome, "Erro na remocao de produto: nome nao pode ser vazio ou nulo.");
 		Validator.verificaStringVazia(nome, "Erro na remocao de produto: nome nao pode ser vazio ou nulo.");

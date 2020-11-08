@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import controller.ControllerCliente;
+import controller.ControllerCompra;
 import controller.ControllerFornecedor;
 import controller.ControllerProdutosDosFornecedores;
 import easyaccept.EasyAccept;
@@ -13,6 +14,7 @@ public class Facade {
 	private ControllerCliente cliente;
 	private ControllerFornecedor fornecedor;
 	private ControllerProdutosDosFornecedores produtos;
+	private ControllerCompra compras;
 
 	public static void main(String[] args) {
 		args = new String[] { "saga.Facade", "acceptance_test/use_case_1.txt", "acceptance_test/use_case_2.txt",
@@ -25,6 +27,7 @@ public class Facade {
 		this.cliente = new ControllerCliente();
 		this.fornecedor = new ControllerFornecedor(fornecedores);
 		this.produtos = new ControllerProdutosDosFornecedores(fornecedores);
+		this.compras =  new ControllerCompra(cliente,produtos);
 	}
 
 	public String adicionaCliente(String cpf, String nome, String email, String localizacao) {
@@ -54,6 +57,15 @@ public class Facade {
 	public String exibeClientes() {
 		return cliente.exibeTodosClientes();
 	}
+	public String exibeFornecedores() {
+		return fornecedor.exibeTodosFornecedores();
+	}
+	public String exibeProdutosFornecedor(String fornecedor) {
+		return produtos.exibeProdutosFornecedor(fornecedor);
+	}
+	public String exibeProdutos() {
+		return produtos.exibeTodosProdutos();
+	}
 
 	public String editaFornecedor(String nome, String atributo, String novoValor) {
 		return fornecedor.editaFornecedor(nome, atributo, novoValor);
@@ -77,5 +89,9 @@ public class Facade {
 
 	public void removeProduto(String nome, String descricao, String fornecedor) {
 		this.produtos.removeProduto(nome, descricao, fornecedor);
+	}
+	
+	public void adicionaCompra(String cpf, String fornecedor, String data,String nome,String descricao) {
+		this.compras.cadastraCompra(cpf,fornecedor,data,nome,descricao);
 	}
 }

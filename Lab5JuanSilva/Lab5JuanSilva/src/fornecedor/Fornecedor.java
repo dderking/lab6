@@ -1,14 +1,18 @@
 package fornecedor;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class Fornecedor {
+public class Fornecedor implements Comparable<Fornecedor> {
 
 	private String nome;
 	private String email;
 	private String telefone;
 	private Map<String, Produto> produtos;
+	private Map<String, Conta> contas;
 
 	public Fornecedor(String nome, String email, String telefone) {
 		this.nome = nome;
@@ -47,6 +51,19 @@ public class Fornecedor {
 		throw new IllegalArgumentException("Erro na exibicao de produto: produto nao existe.");
 
 	}
+	public String exibeProdutos() {
+		if(this.produtos.isEmpty()) {
+			return this.nome+" -";
+		}
+		List<Produto> todosProdutos = new ArrayList<Produto>();
+		todosProdutos.addAll(this.produtos.values());
+		Collections.sort(todosProdutos);
+		String[] produtosToString = new String[this.produtos.size()];
+		for (int i = 0; i < this.produtos.size(); i++) {
+			produtosToString[i] = this.nome+" - "+todosProdutos.get(i).toString();
+		}
+		return String.join(" | ", produtosToString);
+	}
 
 	public void editaProduto(String nome, String descricao, double novoPreco) {
 		if (existeProduto(nome, descricao)) {
@@ -66,7 +83,12 @@ public class Fornecedor {
 		}
 	}
 
-	public String toStringExibeFornecedor() {
+	public int compareTo(Fornecedor fornecedor) {
+		return this.nome.compareTo(fornecedor.getNome());
+	}
+
+	@Override
+	public String toString() {
 		return this.nome + " - " + this.email + " - " + this.telefone;
 	}
 

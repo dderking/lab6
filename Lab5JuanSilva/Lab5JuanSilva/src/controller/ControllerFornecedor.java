@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -95,7 +96,7 @@ public class ControllerFornecedor {
 		if (existeFornecedor(nome) == false) {
 			throw new IllegalArgumentException("Erro na exibicao do fornecedor: fornecedor nao existe.");
 		}
-		return getFornecedores().get(nome).toStringExibeFornecedor();
+		return getFornecedores().get(nome).toString();
 
 	}
 
@@ -105,16 +106,18 @@ public class ControllerFornecedor {
 	 * @return Retorna todos os fornecedores na forma de String.
 	 */
 	public String exibeTodosFornecedores() {
-		String texto = "";
-		List<String> chaves = new ArrayList<String>(fornecedores.keySet());
-		for (int i = 0; i < chaves.size(); i++) {
-			texto += fornecedores.get(chaves.get(i)).toStringExibeFornecedor();
-			if (i < chaves.size() - 1) {
-				texto += " | ";
-			}
+
+		List<Fornecedor> todosFornecedor = new ArrayList<Fornecedor>();
+		todosFornecedor.addAll(this.fornecedores.values());
+		Collections.sort(todosFornecedor);
+		String[] fornecedoresToString = new String[this.fornecedores.size()];
+		for (int i = 0; i < this.fornecedores.size(); i++) {
+			fornecedoresToString[i] = todosFornecedor.get(i).toString();
 		}
-		return texto;
+		return String.join(" | ", fornecedoresToString);
+
 	}
+
 
 	/**
 	 * Método responsável por editar informações de um fornecedor.

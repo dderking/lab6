@@ -3,7 +3,7 @@ package fornecedor;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class Produto {
+public class Produto implements Comparable<Produto> {
 	private String nome;
 	private String descricao;
 	private double preco;
@@ -26,7 +26,9 @@ public class Produto {
 	public void setPreco(double preco) {
 		this.preco = preco;
 	}
-
+	public int compareTo(Produto produto) {
+		return this.nome.compareTo(produto.getNome());
+	}
 	@Override
 	public String toString() {
 		NumberFormat nf = NumberFormat.getInstance(Locale.getDefault());

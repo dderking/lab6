@@ -25,5 +25,9 @@ public class Validator {
 			throw new NullPointerException(mensagem);
 		}
 	}
-
+	public static void verificaDataValida(String valor, String mensagem) {
+		if (valor.length()!=10) {
+			throw new IllegalArgumentException(mensagem);
+		}
+	}
 }
