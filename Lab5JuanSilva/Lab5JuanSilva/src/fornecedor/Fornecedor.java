@@ -1,9 +1,11 @@
 package fornecedor;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class Fornecedor implements Comparable<Fornecedor> {
@@ -19,12 +21,24 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		this.email = email;
 		this.telefone = telefone;
 		this.produtos = new HashMap<>();
+		this.contas = new HashMap<>();
 
 	}
 
 	public void cadastraProduto(String nome, String descricao, double preco) {
 		if (!existeProduto(nome, descricao)) {
 			this.produtos.put(nome + descricao, new Produto(nome, descricao, preco));
+		}
+	}
+
+	public void cadastraCompra(String cpf, String nomeCliente, String nomeProduto, String descricao, String data) {
+		if (existeProduto(nomeProduto, descricao)) {
+			if (contas.containsKey(cpf)) {
+				contas.get(cpf).adicionaCompras(nomeProduto, data, produtos.get(nomeProduto + descricao).getPreco());
+			} else {
+				contas.put(cpf, new Conta(this.nome, nomeCliente));
+				contas.get(cpf).adicionaCompras(nomeProduto, data, produtos.get(nomeProduto + descricao).getPreco());
+			}
 		}
 	}
 
@@ -51,18 +65,49 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		throw new IllegalArgumentException("Erro na exibicao de produto: produto nao existe.");
 
 	}
+
 	public String exibeProdutos() {
-		if(this.produtos.isEmpty()) {
-			return this.nome+" -";
+		if (this.produtos.isEmpty()) {
+			return this.nome + " -";
 		}
 		List<Produto> todosProdutos = new ArrayList<Produto>();
 		todosProdutos.addAll(this.produtos.values());
 		Collections.sort(todosProdutos);
 		String[] produtosToString = new String[this.produtos.size()];
 		for (int i = 0; i < this.produtos.size(); i++) {
-			produtosToString[i] = this.nome+" - "+todosProdutos.get(i).toString();
+			produtosToString[i] = this.nome + " - " + todosProdutos.get(i).toString();
 		}
 		return String.join(" | ", produtosToString);
+	}
+
+	public String getDebitoConta(String cpf) {
+		if (contas.containsKey(cpf)) {
+			NumberFormat nf = NumberFormat.getInstance(Locale.ENGLISH);
+			nf.setMinimumFractionDigits(2);			
+			return nf.format(contas.get(cpf).getDebito());
+		}
+		throw new NullPointerException("Erro ao recuperar debito: cliente nao tem debito com fornecedor.");
+
+	}
+
+	public String exibeContaCliente(String cpf) {
+		if(contas.containsKey(cpf)) {
+			return contas.get(cpf).toString();
+			
+		}
+		else {
+			throw new NullPointerException("Erro ao exibir conta do cliente: cliente nao tem nenhuma conta com o fornecedor.");
+		}
+	}
+
+	public String exibeConta(String cpf) {
+		if(contas.containsKey(cpf)) {
+			return contas.get(cpf).contaFormatada();
+			
+		}
+		else {
+			throw new NullPointerException("Erro ao exibir conta do cliente: cliente nao tem nenhuma conta com o fornecedor.");
+		}
 	}
 
 	public void editaProduto(String nome, String descricao, double novoPreco) {
@@ -116,5 +161,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 			return false;
 		return true;
 	}
+
+
 
 }

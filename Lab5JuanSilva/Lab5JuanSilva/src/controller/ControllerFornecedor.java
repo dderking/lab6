@@ -22,7 +22,7 @@ public class ControllerFornecedor {
 	 * Construtor responsável por iniciar atributos referente ao controlador de
 	 * fornecedores.
 	 */
-	public ControllerFornecedor(Map<String, Fornecedor>fornecedores) {
+	public ControllerFornecedor(Map<String, Fornecedor> fornecedores) {
 		this.fornecedores = fornecedores;
 	}
 
@@ -117,7 +117,6 @@ public class ControllerFornecedor {
 		return String.join(" | ", fornecedoresToString);
 
 	}
-
 
 	/**
 	 * Método responsável por editar informações de um fornecedor.

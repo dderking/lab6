@@ -19,6 +19,10 @@ public class Produto implements Comparable<Produto> {
 		return nome;
 	}
 
+	public double getPreco() {
+		return preco;
+	}
+
 	public String getDescricao() {
 		return descricao;
 	}
@@ -67,4 +71,5 @@ public class Produto implements Comparable<Produto> {
 		return true;
 	}
 
+	
 }
