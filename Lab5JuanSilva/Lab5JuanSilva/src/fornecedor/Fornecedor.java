@@ -1,7 +1,9 @@
 package fornecedor;
 
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -31,13 +33,14 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		}
 	}
 
-	public void cadastraCompra(String cpf, String nomeCliente, String nomeProduto, String descricao, String data) {
+	public void cadastraCompra(String cpf, String nomeCliente, String nomeProduto, String descricao, String data)
+			throws ParseException {
 		if (existeProduto(nomeProduto, descricao)) {
 			if (contas.containsKey(cpf)) {
-				contas.get(cpf).adicionaCompras(nomeProduto, data, produtos.get(nomeProduto + descricao).getPreco());
+				contas.get(cpf).adicionaCompras(nomeProduto, data,descricao, produtos.get(nomeProduto + descricao).getPreco());
 			} else {
 				contas.put(cpf, new Conta(this.nome, nomeCliente));
-				contas.get(cpf).adicionaCompras(nomeProduto, data, produtos.get(nomeProduto + descricao).getPreco());
+				contas.get(cpf).adicionaCompras(nomeProduto, data,descricao, produtos.get(nomeProduto + descricao).getPreco());
 			}
 		}
 	}
@@ -83,30 +86,41 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	public String getDebitoConta(String cpf) {
 		if (contas.containsKey(cpf)) {
 			NumberFormat nf = NumberFormat.getInstance(Locale.ENGLISH);
-			nf.setMinimumFractionDigits(2);			
+			nf.setMinimumFractionDigits(2);
 			return nf.format(contas.get(cpf).getDebito());
 		}
 		throw new NullPointerException("Erro ao recuperar debito: cliente nao tem debito com fornecedor.");
 
 	}
 
-	public String exibeContaCliente(String cpf) {
-		if(contas.containsKey(cpf)) {
-			return contas.get(cpf).toString();
-			
+	public List<Compra> getCompras() {
+		List<Compra> compras = new ArrayList<>();
+		if (verificaCompras()) {
+			for (Conta conta : contas.values()) {
+				compras.addAll(conta.getCompras());
+			}
 		}
-		else {
-			throw new NullPointerException("Erro ao exibir conta do cliente: cliente nao tem nenhuma conta com o fornecedor.");
+		return compras;
+
+	}
+
+	public String exibeContaCliente(String cpf) {
+		if (contas.containsKey(cpf)) {
+			return contas.get(cpf).toString();
+
+		} else {
+			throw new NullPointerException(
+					"Erro ao exibir conta do cliente: cliente nao tem nenhuma conta com o fornecedor.");
 		}
 	}
 
 	public String exibeConta(String cpf) {
-		if(contas.containsKey(cpf)) {
+		if (contas.containsKey(cpf)) {
 			return contas.get(cpf).contaFormatada();
-			
-		}
-		else {
-			throw new NullPointerException("Erro ao exibir conta do cliente: cliente nao tem nenhuma conta com o fornecedor.");
+
+		} else {
+			throw new NullPointerException(
+					"Erro ao exibir conta do cliente: cliente nao tem nenhuma conta com o fornecedor.");
 		}
 	}
 
@@ -126,6 +140,10 @@ public class Fornecedor implements Comparable<Fornecedor> {
 			throw new IllegalArgumentException("Erro na remocao de produto: produto nao existe.");
 
 		}
+	}
+
+	public boolean verificaCompras() {
+		return !this.contas.isEmpty();
 	}
 
 	public int compareTo(Fornecedor fornecedor) {
@@ -161,7 +179,5 @@ public class Fornecedor implements Comparable<Fornecedor> {
 			return false;
 		return true;
 	}
-
-
 
 }

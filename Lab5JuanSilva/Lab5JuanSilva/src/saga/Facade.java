@@ -1,5 +1,6 @@
 package saga;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +19,8 @@ public class Facade {
 
 	public static void main(String[] args) {
 		args = new String[] { "saga.Facade", "acceptance_test/use_case_1.txt", "acceptance_test/use_case_2.txt",
-				"acceptance_test/use_case_3.txt", "acceptance_test/use_case_4.txt","acceptance_test/use_case_5.txt" };
+				"acceptance_test/use_case_3.txt", "acceptance_test/use_case_4.txt", "acceptance_test/use_case_5.txt",
+				"acceptance_test/use_case_6.txt" };
 		EasyAccept.main(args);
 	}
 
@@ -27,7 +29,7 @@ public class Facade {
 		this.cliente = new ControllerCliente();
 		this.fornecedor = new ControllerFornecedor(fornecedores);
 		this.produtos = new ControllerProdutosDosFornecedores(fornecedores);
-		this.compras =  new ControllerCompra(cliente,produtos,fornecedor);
+		this.compras = new ControllerCompra(cliente, produtos, fornecedor);
 	}
 
 	public String adicionaCliente(String cpf, String nome, String email, String localizacao) {
@@ -57,12 +59,15 @@ public class Facade {
 	public String exibeClientes() {
 		return cliente.exibeTodosClientes();
 	}
+
 	public String exibeFornecedores() {
 		return fornecedor.exibeTodosFornecedores();
 	}
+
 	public String exibeProdutosFornecedor(String fornecedor) {
 		return produtos.exibeProdutosFornecedor(fornecedor);
 	}
+
 	public String exibeProdutos() {
 		return produtos.exibeTodosProdutos();
 	}
@@ -90,20 +95,31 @@ public class Facade {
 	public void removeProduto(String nome, String descricao, String fornecedor) {
 		this.produtos.removeProduto(nome, descricao, fornecedor);
 	}
-	
-	public void adicionaCompra(String cpf, String fornecedor, String data,String nome,String descricao) {
-		this.compras.cadastraCompra(cpf,fornecedor,data,nome,descricao);
-	}
-	public String getDebito(String cpf, String fornecedor) {
-		return this.compras.getDebitoConta(cpf,fornecedor);
-		
-	}
-	public String exibeContas(String cpf, String fornecedor) {
-		return this.compras.exibeConta(cpf,fornecedor);
-	}
-	public String exibeContasClientes(String cpf) {
-		return this.compras.exibeContasCliente(cpf);
-		
+
+	public void adicionaCompra(String cpf, String fornecedor, String data, String nome, String descricao)
+			throws ParseException {
+		this.compras.cadastraCompra(cpf, fornecedor, data, nome, descricao);
 	}
 
+	public String getDebito(String cpf, String fornecedor) {
+		return this.compras.getDebitoConta(cpf, fornecedor);
+
+	}
+
+	public String exibeContas(String cpf, String fornecedor) {
+		return this.compras.exibeConta(cpf, fornecedor);
+	}
+
+	public String exibeContasClientes(String cpf) {
+		return this.compras.exibeContasCliente(cpf);
+
+	}
+
+	public void ordenaPor(String criterio) {
+		compras.setCriterio(criterio);
+	}
+
+	public String listarCompras() {
+		return this.compras.exibeComprasOrdernadas();
+	}
 }
