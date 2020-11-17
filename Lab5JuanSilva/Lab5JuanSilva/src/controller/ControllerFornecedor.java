@@ -9,7 +9,7 @@ import fornecedor.Fornecedor;
 import validator.Validator;
 
 /**
- * Controller respons·vel por administrar mÈtodos e lista que est„o relacionados
+ * Controller respons√°vel por administrar m√©todos e lista que est√£o relacionados
  * a fornecedor.
  * 
  * @author Juan Silva - 119210821
@@ -19,7 +19,7 @@ public class ControllerFornecedor {
 	private Map<String, Fornecedor> fornecedores;
 
 	/**
-	 * Construtor respons·vel por iniciar atributos referente ao controlador de
+	 * Construtor respons√°vel por iniciar atributos referente ao controlador de
 	 * fornecedores.
 	 */
 	public ControllerFornecedor(Map<String, Fornecedor> fornecedores) {
@@ -27,7 +27,7 @@ public class ControllerFornecedor {
 	}
 
 	/**
-	 * MÈtodo respons·vel por pegar um fornecedor a partir de seu nome.
+	 * MÔøΩtodo respons√°vel por pegar um fornecedor a partir de seu nome.
 	 * 
 	 * @param nome Nome do fornecedor na forma de String.
 	 * @return Retorna o fornecedor do tipo Fornecedor.
@@ -37,7 +37,7 @@ public class ControllerFornecedor {
 	}
 
 	/**
-	 * MÈtodo respons·vel por adicionar um fornecedor ao sistema.
+	 * MÔøΩtodo respons√°vel por adicionar um fornecedor ao sistema.
 	 * 
 	 * @param nome     Nome do fornecedor na forma de String.
 	 * @param email    Email do fornecedor na forma de String.
@@ -64,7 +64,7 @@ public class ControllerFornecedor {
 	}
 
 	/**
-	 * MÈtodo respons·vel por verificar no sistema que existe o fornecedor a partir
+	 * M√©todo respons√°vel por verificar no sistema que existe o fornecedor a partir
 	 * de seu nome.
 	 * 
 	 * @param nome Nome do fornecedor na forma de String.
@@ -76,7 +76,7 @@ public class ControllerFornecedor {
 	}
 
 	/**
-	 * MÈtodo respons·vel por pegar o HashMap de fornecedores.
+	 * M√©todo respons√°vel por pegar o HashMap de fornecedores.
 	 * 
 	 * @return retorna o HashMap de fornecedores
 	 */
@@ -85,7 +85,7 @@ public class ControllerFornecedor {
 	}
 
 	/**
-	 * MÈtodo respons·vel por exibir um fornecedor na forma de String.
+	 * M√©todo respons√°vel por exibir um fornecedor na forma de String.
 	 * 
 	 * @param nome Nome do fornecedor na forma de String
 	 * @return Retorna um fornecedor na forma de String.
@@ -101,7 +101,7 @@ public class ControllerFornecedor {
 	}
 
 	/**
-	 * MÈtodo respons·vel por exibir todos os fornecedores na forma de String.
+	 * M√©todo respons√°vel por exibir todos os fornecedores na forma de String.
 	 * 
 	 * @return Retorna todos os fornecedores na forma de String.
 	 */
@@ -119,15 +119,15 @@ public class ControllerFornecedor {
 	}
 
 	/**
-	 * MÈtodo respons·vel por editar informaÁıes de um fornecedor.
+	 * M√©todo respons√°vel por editar informa√ß√µes de um fornecedor.
 	 * 
 	 * @param nome      Nome do fornecedor na forma de String.
 	 * @param atributo  Atributo no qual sera alterado no fornecedor na forma de
 	 *                  String.
-	 * @param novoValor NovoValor informado para alteraÁ„o do fornecedor na forma de
+	 * @param novoValor NovoValor informado para altera√ß√£o do fornecedor na forma de
 	 *                  String.
 	 * @return Retorna o novoValor inserido do fornecedor na forma de String, se a
-	 *         ediÁ„o for concluÌda com sucesso.
+	 *         edi√ß√£o for conclu√≠da com sucesso.
 	 */
 	public String editaFornecedor(String nome, String atributo, String novoValor) {
 		Validator.verificaStringNull(nome, "Erro na edicao do fornecedor: nome nao pode ser vazio ou nulo.");
@@ -158,10 +158,10 @@ public class ControllerFornecedor {
 	}
 
 	/**
-	 * MÈtodo respons·vel por remover um fornecedor do sistema a partir de seu nome.
+	 * M√©todo respons√°vel por remover um fornecedor do sistema a partir de seu nome.
 	 * 
 	 * @param nome Nome do fornecedor na forma de String.
-	 * @return Retorna o nome do fornecedor removido, se a remoÁ„o for concluÌda com
+	 * @return Retorna o nome do fornecedor removido, se a remo√ß√£o for conclu√≠da com
 	 *         sucesso.
 	 */
 	public String removeFornecedor(String nome) {

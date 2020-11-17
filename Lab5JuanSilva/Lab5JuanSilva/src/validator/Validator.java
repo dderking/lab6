@@ -1,5 +1,13 @@
 package validator;
 
+/**
+ * 
+ * Classe responsável por validação do projeto
+ * 
+ * @author Juan Silva - 119210821
+ *
+ */
+
 public class Validator {
 	public static void verificaStringVazia(String valor, String mensagem) {
 		if (valor.trim().isEmpty()) {
@@ -25,8 +33,9 @@ public class Validator {
 			throw new NullPointerException(mensagem);
 		}
 	}
+
 	public static void verificaDataValida(String valor, String mensagem) {
-		if (valor.length()!=10) {
+		if (valor.length() != 10) {
 			throw new IllegalArgumentException(mensagem);
 		}
 	}

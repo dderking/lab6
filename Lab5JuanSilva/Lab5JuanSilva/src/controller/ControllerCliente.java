@@ -6,13 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import cliente.Cliente;
 import validator.Validator;
 
 /**
  * 
- * Controller respons·vel por administrar mÈtodos e lista que est„o relacionados
+ * Controller respons√°vel por administrar m√©todos e lista que est√£o relacionados
  * a cliente.
  * 
  * @author Juan Silva - 119210821
@@ -23,7 +22,7 @@ public class ControllerCliente {
 	private Map<String, Cliente> clientes;
 
 	/**
-	 * Construtor respons·vel por iniciar atributos referente ao controlador de
+	 * Construtor respons√°vel por iniciar atributos referente ao controlador de
 	 * clientes.
 	 */
 	public ControllerCliente() {
@@ -31,7 +30,7 @@ public class ControllerCliente {
 	}
 
 	/**
-	 * MÈtodo respons·vel por pegar um cliente a partir de seu CPF.
+	 * M√©todo respons√°vel por pegar um cliente a partir de seu CPF.
 	 * 
 	 * @param cpf CPF do cliente na forma de String.
 	 * @return Retorna o cliente do tipo Cliente.
@@ -41,7 +40,7 @@ public class ControllerCliente {
 	}
 
 	/**
-	 * MÈtodo respons·vel por adicionar um cliente no sistema.
+	 * M√©todo respons√°vel por adicionar um cliente no sistema.
 	 * 
 	 * @param cpf         CPF do cliente na forma de String.
 	 * @param nome        Nome do cliente na forma de String.
@@ -72,7 +71,7 @@ public class ControllerCliente {
 	}
 
 	/**
-	 * MÈtodo respons·vel por verificar no sistema que existe o cliente a partir de
+	 * M[etodo respons√°vel por verificar no sistema que existe o cliente a partir de
 	 * seu CPF.
 	 * 
 	 * @param cpf CPF do cliente na forma de String.
@@ -84,7 +83,7 @@ public class ControllerCliente {
 	}
 
 	/**
-	 * MÈtodo respons·vel por exibir um fornecedor na forma de String.
+	 * M√©todo respons√°vel por exibir um fornecedor na forma de String.
 	 * 
 	 * @param cpf CPF do cliente na forma de String
 	 * @return Retorna um cliente na forma de String.
@@ -100,7 +99,7 @@ public class ControllerCliente {
 	}
 
 	/**
-	 * MÈtodo respons·vel por exibir todos os cliente na forma de String.
+	 * M√©todo respons√°vel por exibir todos os cliente na forma de String.
 	 * 
 	 * @return Retorna todos os clientes na forma de String.
 	 */
@@ -117,15 +116,15 @@ public class ControllerCliente {
 	}
 
 	/**
-	 * MÈtodo respons·vel por editar informaÁıes de um fornecedor.
+	 * M√©todo respons√°vel por editar informa√ß√£os de um fornecedor.
 	 * 
 	 * @param cpf       CPF do cliente na forma de String.
 	 * @param atributo  Atributo no qual sera alterado no cliente na forma de
 	 *                  String.
-	 * @param novoValor NovoValor informado para alteraÁ„o do cliente na forma de
+	 * @param novoValor NovoValor informado para altera√ß√£o do cliente na forma de
 	 *                  String.
 	 * @return Retorna o novoValor inserido do cliente na forma de String, se a
-	 *         ediÁ„o for concluÌda com sucesso.
+	 *         edi√ß√£o for conclu√≠da com sucesso.
 	 */
 	public String editaCliente(String cpf, String atributo, String novoValor) {
 		Validator.verificaStringNull(cpf, "Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.");
@@ -159,10 +158,10 @@ public class ControllerCliente {
 	}
 
 	/**
-	 * MÈtodo respons·vel por remover um cliente do sistema a partir de seu CPF.
+	 * M√©todo respons√°vel por remover um cliente do sistema a partir de seu CPF.
 	 * 
 	 * @param cpf CPF do cliente na forma de String.
-	 * @return Retorna o CPF do cliente removido, se a remoÁ„o for concluÌda com
+	 * @return Retorna o CPF do cliente removido, se a remo√ß√£o for conclu√≠da com
 	 *         sucesso.
 	 */
 	public String removeCliente(String cpf) {

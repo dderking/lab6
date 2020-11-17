@@ -3,6 +3,13 @@ package fornecedor;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+/**
+ * Classe que representa o Produto.
+ * 
+ * @author Juan Silva - 119210821
+ *
+ */
+
 public class Produto implements Comparable<Produto> {
 	private String nome;
 	private String descricao;
@@ -15,24 +22,58 @@ public class Produto implements Comparable<Produto> {
 
 	}
 
+	/**
+	 * Retorno a String que representa o nome do Produto.
+	 * 
+	 * @return nome Nome do produto
+	 */
 	public String getNome() {
 		return nome;
 	}
+
+	/**
+	 * Retorno o Double que representa o preco do produto.
+	 * 
+	 * @return preco Preco do produto
+	 */
 
 	public double getPreco() {
 		return preco;
 	}
 
+	/**
+	 * Retorno a String que representa o descricao do produto.
+	 * 
+	 * @return descricao Descricao do produto
+	 */
+
 	public String getDescricao() {
 		return descricao;
 	}
 
+	/**
+	 * Método responsável por alterar o preco do produto.
+	 * 
+	 * @param preco Preco do produto.
+	 */
 	public void setPreco(double preco) {
 		this.preco = preco;
 	}
+
+	/**
+	 * Método responsável pela comparação de produtos.
+	 * 
+	 * @return retorna um inteiro para a comparação
+	 */
 	public int compareTo(Produto produto) {
 		return this.nome.compareTo(produto.getNome());
 	}
+
+	/**
+	 * Método que representa o produto no formato: NOME - DESCRICAO - PRECO.
+	 * 
+	 * @return Uma string que é a representação do produto
+	 */
 	@Override
 	public String toString() {
 		NumberFormat nf = NumberFormat.getInstance(Locale.getDefault());
@@ -40,6 +81,11 @@ public class Produto implements Comparable<Produto> {
 		return this.nome + " - " + this.descricao + " - R$" + nf.format(this.preco);
 	}
 
+	/**
+	 * Método que calcula o número hash do Produto.
+	 * 
+	 * @return Um valor inteiro que representa o número hash do objeto Produto.
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -49,6 +95,12 @@ public class Produto implements Comparable<Produto> {
 		return result;
 	}
 
+	/**
+	 * Método que testa se dois objetos são iguais, nesse caso, se a nome e
+	 * descricao são iguais.
+	 * 
+	 * @return Um valor booleano que representa se são iguais ou não.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -71,5 +123,4 @@ public class Produto implements Comparable<Produto> {
 		return true;
 	}
 
-	
 }
