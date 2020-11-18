@@ -217,4 +217,8 @@ public class Facade {
 	public String listarCompras() {
 		return this.cc.listarCompras();
 	}
+
+	public void adicionaCombo(String fornecedor, String nome, String descricao, double fator, String produtos) {
+		this.cc.adicionaCombo(fornecedor, nome, descricao, fator, produtos);
+	}
 }
